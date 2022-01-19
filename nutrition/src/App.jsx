@@ -1,45 +1,60 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+// import React, { useState, useEffect } from "react";
+import { Route, Routes, Link } from "react-router-dom";
+import "./App.css";
+// import { useNavigate } from "react-router";
+import Keto from "./components/Keto";
+import Intermittent from "./components/Intermittent";
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+// function NotFound() {
+//   return;
+//   ("not found");
+// }
 
+function NotFound() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/");
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div>
+      <h2>Not Found - 404</h2>
+      <button onClick={() => navigate("/")}>Go Home</button>
     </div>
-  )
+  );
 }
 
-export default App
+function App() {
+  // const [price, setPrice] = useState(null);
+
+  // const handleClick = (price) => {
+  //   setPrice(price);
+  // };
+
+  return (
+    <div>
+      <nav>
+        <h1>FITNESS over 40</h1>
+        <Link to="/about">About</Link> | <Link to="/">Home</Link>
+      </nav>
+      <main>
+        <Link to="/keto">
+          <div>Keto</div>{" "}
+        </Link>
+        <Link to="/intermittent">
+          <div>intermittent</div>
+        </Link>
+      </main>
+      <Routes>
+        {/* <Route path="/" element={<App />} /> */}
+        <Route path="intermittent" element={<Intermittent />} />
+        <Route path="keto" element={<Keto />} />
+        {/* <Route path="/price/:country" element={<Price />} /> */}
+        {/* <Route path="*" element={<NotFound />} /> */}
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
