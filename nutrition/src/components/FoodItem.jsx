@@ -2,38 +2,55 @@ import React from "react";
 import "./FoodItem.css";
 
 const FoodItem = (props) => {
-  let list = props.cart.map((item, index) => {
-    return (
-      <li
-        className="list"
-        key={index}
-        onClick={() => {
-          props.handleClick(index);
-        }}
-      >
-        <img className="image" src={item?.food?.image} />
-        <div className="description">
-          {"Carbs"} {item?.food?.nutrients?.CHOCDF}g, Protein:{" "}
-          {item?.food?.nutrients?.PROCNT}g, Fat: {item?.food?.nutrients?.FAT}g,
-          {item?.food?.nutrient?.ENRGC_KCAL}
-        </div>
-      </li>
-    );
-  });
+  // let list = props.cart.map((item, index) => {
+  //   if (!props.request) {
+  //     return;
+  //   } else {
+  // console.log("item: ", item);
+  // return (
+  // <li
+  //   // className="list"
+  //   className="list-group-item"
+  //   key={index}
+  //   onClick={() => {
+  //     props.handleClick(index);
+  //   }}
+  // >
+  //   <img className="image" src={item?.food?.image} />
+  //   <div className="description">
+  //     Carb: {item?.food?.nutrients?.CHOCDF} g, Protein:{" "}
+  //     {item?.food?.nutrients?.PROCNT}g, Fat: {item?.food?.nutrients?.FAT}
+  //     g, Calories: {item?.food?.nutrients?.ENERC_KCAL}
+  //   </div>
+  // </li>
+  // );
 
+  // );}
+
+  // return (
+  // <div>
+  //   <h2>Your food</h2>
+  //   <ul className="list-group">{list}</ul>
+  // </div>
+  // );
+  // };
   return (
-    <div>
-      <h2>Your food</h2>
-      <ul>{list}</ul>
-    </div>
+    <li
+      // className="list"
+      className="list-group-item"
+      // key={index}
+      onClick={() => {
+        props.clickRemove(props.index);
+      }}
+    >
+      <img className="image" src={props.item?.food?.image} />
+      <div className="description">
+        Carb: {props.item?.food?.nutrients?.CHOCDF} g, Protein:{" "}
+        {props.item?.food?.nutrients?.PROCNT}g, Fat:{" "}
+        {props.item?.food?.nutrients?.FAT}
+        g, Calories: {props.item?.food?.nutrients?.ENERC_KCAL}
+      </div>
+    </li>
   );
 };
-
 export default FoodItem;
-
-/* <Carb carb={Food?.food?.nutrients.CHOCDF} />
-<Protein carb={Food?.food?.nutrients.CHOCDF} />
-<Fat carb={Food?.food?.nutrients.CHOCDF} />
-<Calories carb={Food?.food?.nutrients.CHOCDF} /> */
-
-// {Food?.food?.nutrients.PROCNT}{Food?.food?.nutrients.FAT}{Food?.food?.nutrients.ENERC_KCAL}

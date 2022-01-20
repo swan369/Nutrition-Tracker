@@ -5,10 +5,21 @@ import { useRef } from "react";
 
 const Form = (props) => {
   const inputRef = useRef();
+  // console.log(inputRef);
+  const reset = () => {
+    inputRef.current.value = "";
+  };
+
   return (
     <div>
-      <input className="textInput" type="text" ref={inputRef} />
-      <Button className="btn" msg={inputRef} click={props.click} />
+      <input
+        // value={props.request}
+        className="text"
+        type="text"
+        ref={inputRef}
+        // onChange={props.click}
+      />
+      <Button msg={inputRef} click={props.click} handleClickReset={reset} />
     </div>
   );
 };

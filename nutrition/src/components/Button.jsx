@@ -4,10 +4,12 @@ import "./Button.css";
 const Button = (props) => {
   return (
     <input
+      className="btn btn-primary"
       type="submit"
       value="submit"
-      onClick={() => {
-        props.click(props.msg);
+      onClick={(e) => {
+        props.click(props.msg, e);
+        props.handleClickReset();
       }}
     />
   );

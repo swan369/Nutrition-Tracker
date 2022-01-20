@@ -1,11 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Form from "./Form";
-// import Image from "./Image";
-// import Carb from "./Carb";
-// import Protein from "./Protein";
-// import Fat from "./Fat";
-// import Calories from "./Calories";
 import FoodItem from "./FoodItem";
 
 function Keto() {
@@ -13,53 +8,115 @@ function Keto() {
   const [Food, setFood] = useState({});
   const [Request, setRequest] = useState("");
   const [FoodObjArr, setFoodObjArr] = useState([]);
+  const [Status, setStatus] = useState("");
+  const [TotalCal, setTotalCal] = useState(0);
+  // const [TotalCarb, setTotalCarb] = useState(0);
+  // const [TotalProt, setTotalProt] = useState(0);
+  // const [TotalFat, setTotalFat] = useState(0);
+
+  // const [Undefined, setUndefined] = useState("");
+  const foodURL = `https://api.edamam.com/api/food-database/v2/parser?app_id=52bf2812&app_key=66ff0f0b901d583501ff1d55e8b00be7&ingr=${Request}&nutrition-type=cooking&category=generic-foods`;
 
   const getRandomFood = () => {
-    fetch(
-      `https://api.edamam.com/api/food-database/v2/parser?app_id=52bf2812&app_key=66ff0f0b901d583501ff1d55e8b00be7&ingr=${Request}&nutrition-type=cooking&category=generic-foods`
-    )
+    setStatus("pending");
+
+    fetch(foodURL)
       .then((response) => response.json())
       .then((data) => {
-        const n = data?.parsed[0];
+        setStatus("complete");
+        let n = data?.parsed?.[0];
         console.log(n);
         setFood(n);
+        console.log(Food);
+      })
+      .catch((error) => {
+        setStatus("error");
+        console.error("Error:", error);
       });
   };
 
   useEffect(() => {
     getRandomFood();
-  }, [Request]);
+  }, [foodURL]);
+
+  const addToCart = (item) => {
+    if (item) {
+      setFoodObjArr([...FoodObjArr, item]);
+      console.log("FoodObjArr: ", FoodObjArr);
+    } else {
+      return;
+    }
+    // updateTotalCalories(FoodObjArr);
+  };
 
   useEffect(() => {
-    // console.log(Food);
     addToCart(Food);
   }, [Food]);
 
-  const addToCart = (item) => {
-    setFoodObjArr([...FoodObjArr, item]);
-  };
+  // const updateTotalCalories = (arr) => {
+  //   console.log(arr);
+  //   let calories = 0;
+  //   arr.forEach((item) => {
+  //     const nonParsedcalories = item?.food?.nutrients?.ENERC_KCAL;
+  //     const parsed = Number(Math.trunc(nonParsedcalories));
+  //     calories += parsed;
+  //   });
+  // calories = Food.food.nutrients.ENERC_KCAL;
+  // console.log(calories);
+  // setTotalCal(calories);
+  // };
 
   const removeFromCart = (index) => {
     const cartArr = FoodObjArr.filter((item, i) => i !== index);
     setFoodObjArr(cartArr);
   };
 
-  const handleSubmit = (msg) => {
+  const handleSubmit = (msg, e) => {
+    e.preventDefault();
     const messageTyped = msg.current.value;
+    console.log(messageTyped);
     setRequest(messageTyped);
   };
 
+  console.log(Request);
+  // const handleControlledSubmit = (e) => {
+  //   console.log(e);
+  //   const query = e.target.value;
+  //   e.preventDefault();
+  //   setRequest(query);
+  // };
+  if (Status === "pending") {
+    return "LOADING";
+  }
+
+  if (Status === "error") {
+    return "ERROR";
+  }
   return (
     <>
-      <div className="App">
+      <div>
+        <h2>Keto goal: less than 50g Carb, Carb: 5%, Protein: 20%, Fat: 75%</h2>
         <Form click={handleSubmit} />
-        <FoodItem cart={FoodObjArr} handleClick={removeFromCart} />
-        {/* <Carb carb={GIF?.fields?.item_name} /> */}
-        {/* <Image url={Food?.food?.image} />
-       
-
-        {/* <Image url={GIF?.images?.original?.url} /> */}
-        {/* <p>New Name: {person?.name?.first}</p> */}
+        {/* <Form request={Request}click={handleControlledSubmit} /> */}
+        <div>
+          <h2>Your food</h2>
+          <ul className="list-group">
+            {FoodObjArr.map((item, index) => {
+              // if (item) {
+              return (
+                <FoodItem
+                  FoodObjArr={FoodObjArr}
+                  request={Request}
+                  clickRemove={removeFromCart}
+                  item={item}
+                  index={index}
+                  key={index}
+                />
+              );
+              // }
+            })}
+          </ul>
+        </div>
         {/* <p>Name: {JSON.stringify(person)}</p> */}
       </div>
     </>
