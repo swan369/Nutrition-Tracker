@@ -2,10 +2,11 @@ import React from "react";
 import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 
-const DoughnutChart = () => {
+const DoughnutChart = (props) => {
+  const carb = props.carb;
   const data = {
-    labels: ["Carb", "Protein", "Fat", "Calories"],
-    datasets: [{ data: [12, 19, 3, 30] }],
+    labels: ["Carb", "Protein", "Fat"],
+    datasets: [{ data: [carb, 19, 3] }],
   };
   return (
     <div>

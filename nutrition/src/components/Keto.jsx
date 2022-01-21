@@ -1,14 +1,15 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, prevState } from "react";
 import Form from "./Form";
 import FoodItem from "./FoodItem";
 import DoughnutChart from "./DoughnutChart";
 
 function Keto() {
-  const [Food, setFood] = useState({});
+  const [Food, setFood] = useState(null);
   const [Request, setRequest] = useState("");
   const [FoodObjArr, setFoodObjArr] = useState([]);
   const [Status, setStatus] = useState("");
+  const [Carb, setCarb] = useState(0);
 
   const foodURL = `https://api.edamam.com/api/food-database/v2/parser?app_id=52bf2812&app_key=66ff0f0b901d583501ff1d55e8b00be7&ingr=${Request}&nutrition-type=cooking&category=generic-foods`;
 
@@ -22,7 +23,6 @@ function Keto() {
         let n = data?.parsed?.[0];
         console.log(n);
         setFood(n);
-        console.log(Food);
       })
       .catch((error) => {
         setStatus("error");
@@ -45,18 +45,47 @@ function Keto() {
 
   useEffect(() => {
     addToCart(Food);
+    setRequest("");
+    addTotalCarb(Food);
   }, [Food]);
+
+  function sanitise(x) {
+    if (isNaN(x)) {
+      return NaN;
+    }
+    return x;
+  }
+
+  const addTotalCarb = (Food) => {
+    console.log(Food);
+    const foodCarb = parseInt(Food?.food?.nutrients?.CHOCDF);
+    if (sanitise(foodCarb)) {
+      console.log(Carb);
+      // setCalories(Calories + foodCal);
+      setCarb((prevCarb) => prevCarb + foodCarb);
+    }
+  };
+
+  const removeTotalCarb = (Food) => {
+    const foodCarb = parseInt(Food?.food?.nutrients?.CHOCDF);
+    if (sanitise(foodCarb)) {
+      console.log(Carb);
+      setCarb((prevCarb) => prevCarb - foodCarb);
+    }
+  };
 
   const removeFromCart = (index) => {
     const cartArr = FoodObjArr.filter((item, i) => i !== index);
     setFoodObjArr(cartArr);
+
+    removeTotalCarb(Food);
   };
 
   const handleSubmit = (msg, e) => {
     e.preventDefault();
     const messageTyped = msg.current.value;
     setRequest(messageTyped);
-    // getRandomFood();
+    setFood("");
   };
   if (Status === "pending") {
     return "LOADING";
@@ -88,7 +117,7 @@ function Keto() {
             })}
           </ul>
         </div>
-        <DoughnutChart />
+        <DoughnutChart carb={Carb} />
       </div>
     </>
   );
@@ -116,8 +145,8 @@ export default Keto;
 // setTotalCal(calories);
 // };
 
-{
-  /* <p>Name: {JSON.stringify(person)}</p> */
-}
-{
-}
+// {
+/* <p>Name: {JSON.stringify(person)}</p> */
+// }
+// {
+// }

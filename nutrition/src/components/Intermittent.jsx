@@ -60,11 +60,6 @@ function Intermittent() {
     setRequest(query);
   };
 
-  // const handleSubmit = (msg, e) => {
-  //   e.preventDefault();
-  //   const messageTyped = msg.current.value;
-  //   setRequest(messageTyped);
-  // };
   if (Status === "pending") {
     return "LOADING";
   }
@@ -90,3 +85,9 @@ function Intermittent() {
 }
 
 export default Intermittent;
+
+// const handleSubmit = (msg, e) => {
+//   e.preventDefault();
+//   const messageTyped = msg.current.value;
+//   setRequest(messageTyped);
+// };
