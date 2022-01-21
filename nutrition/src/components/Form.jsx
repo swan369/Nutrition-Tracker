@@ -11,10 +11,10 @@ const Form = (props) => {
   };
 
   return (
-    <div>
+    <div className="form">
       <input
+        className="textInput"
         // value={props.request}
-        className="text"
         type="text"
         ref={inputRef}
         // onChange={props.click}

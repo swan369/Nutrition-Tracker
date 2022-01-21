@@ -26,10 +26,14 @@ function NotFound() {
 function App() {
   return (
     <div>
-      <nav className="navbar navbar-light bg-light">
+      <nav className="navbar navbar-light bg-dark">
         <h1>FITNESS over 40</h1>
-        <Link to="/about">About</Link>
-        <Link to="/home">Home</Link>
+        <Link to="/about">
+          <span>About</span>
+        </Link>
+        <Link to="/home">
+          <span>Home</span>
+        </Link>
       </nav>
 
       <Routes>

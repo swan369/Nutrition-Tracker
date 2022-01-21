@@ -3,13 +3,17 @@ import { useState, useEffect, prevState } from "react";
 import Form from "./Form";
 import FoodItem from "./FoodItem";
 import DoughnutChart from "./DoughnutChart";
+import CalFat from "./CalFat";
 
 function Keto() {
   const [Food, setFood] = useState(null);
   const [Request, setRequest] = useState("");
   const [FoodObjArr, setFoodObjArr] = useState([]);
   const [Status, setStatus] = useState("");
-  const [Carb, setCarb] = useState(0);
+  const [Carb, setCarb] = useState(1);
+  const [Prot, setProt] = useState(1);
+  const [Fat, setFat] = useState(1);
+  const [Calories, setCalories] = useState(1);
 
   const foodURL = `https://api.edamam.com/api/food-database/v2/parser?app_id=52bf2812&app_key=66ff0f0b901d583501ff1d55e8b00be7&ingr=${Request}&nutrition-type=cooking&category=generic-foods`;
 
@@ -45,8 +49,11 @@ function Keto() {
 
   useEffect(() => {
     addToCart(Food);
-    setRequest("");
     addTotalCarb(Food);
+    addTotalProt(Food);
+    addTotalFat(Food);
+    addTotalCalories(Food);
+    setRequest("");
   }, [Food]);
 
   function sanitise(x) {
@@ -57,28 +64,66 @@ function Keto() {
   }
 
   const addTotalCarb = (Food) => {
-    console.log(Food);
     const foodCarb = parseInt(Food?.food?.nutrients?.CHOCDF);
     if (sanitise(foodCarb)) {
-      console.log(Carb);
-      // setCalories(Calories + foodCal);
       setCarb((prevCarb) => prevCarb + foodCarb);
+    }
+  };
+  const addTotalProt = (Food) => {
+    const foodProt = parseInt(Food?.food?.nutrients?.PROCNT);
+    if (sanitise(foodProt)) {
+      setProt((prevProt) => prevProt + foodProt);
+    }
+    console.log(Prot);
+  };
+
+  const addTotalFat = (Food) => {
+    const foodFat = parseInt(Food?.food?.nutrients?.FAT);
+    if (sanitise(foodFat)) {
+      setFat((prevFat) => prevFat + foodFat);
+    }
+  };
+  const addTotalCalories = (Food) => {
+    const foodCal = parseInt(Food?.food?.nutrients?.ENERC_KCAL);
+    if (sanitise(foodCal)) {
+      setCalories((prevCalories) => prevCalories + foodCal);
     }
   };
 
   const removeTotalCarb = (Food) => {
-    const foodCarb = parseInt(Food?.food?.nutrients?.CHOCDF);
-    if (sanitise(foodCarb)) {
-      console.log(Carb);
-      setCarb((prevCarb) => prevCarb - foodCarb);
-    }
+    const item = Food[0];
+    const foodCarb = parseInt(item?.food?.nutrients?.CHOCDF);
+    console.log(foodCarb);
+    setCarb(Carb - foodCarb);
+  };
+
+  const removeTotalProt = (Food) => {
+    const item = Food[0];
+    const foodProt = parseInt(item?.food?.nutrients?.PROCNT);
+    setProt(Prot - foodProt);
+  };
+
+  const removeTotalFat = (Food) => {
+    const item = Food[0];
+    const foodFat = parseInt(item?.food?.nutrients?.FAT);
+    setFat(Fat - foodFat);
+  };
+
+  const removeTotalCalories = (Food) => {
+    const item = Food[0];
+    const foodCalories = parseInt(item?.food?.nutrients?.ENERC_KCAL);
+    setFat(Calories - foodCalories);
   };
 
   const removeFromCart = (index) => {
+    const foodRemoved = FoodObjArr.filter((item, i) => i === index);
+    console.log(foodRemoved);
     const cartArr = FoodObjArr.filter((item, i) => i !== index);
     setFoodObjArr(cartArr);
-
-    removeTotalCarb(Food);
+    removeTotalProt(foodRemoved);
+    removeTotalFat(foodRemoved);
+    removeTotalCarb(foodRemoved);
+    removeTotalCalories(foodRemoved);
   };
 
   const handleSubmit = (msg, e) => {
@@ -97,11 +142,11 @@ function Keto() {
 
   return (
     <>
-      <div>
-        <h2>Keto goal: less than 50g Carb, Carb: 5%, Protein: 20%, Fat: 75%</h2>
+      <div className="ketogenic">
+        <p>Keto goal: less than 50g Carb, Carb: 5%, Protein: 20%, Fat: 75%</p>
         <Form click={handleSubmit} />
         <div>
-          <h2>Your food</h2>
+          {/* <h2>Your food</h2> */}
           <ul className="list-group">
             {FoodObjArr.map((item, index) => {
               return (
@@ -117,36 +162,14 @@ function Keto() {
             })}
           </ul>
         </div>
-        <DoughnutChart carb={Carb} />
+        <DoughnutChart carb={Carb} prot={Prot} fat={Fat} />
+        {/* {FoodObjArr.map((item, index) => {
+          return <CalFat carb={Carb} cal={Calories} />;
+        })} */}
+        <CalFat carb={Carb} cal={Calories} />
       </div>
     </>
   );
 }
 
 export default Keto;
-
-// const [TotalCarb, setTotalCarb] = useState(0);
-// const [TotalProt, setTotalProt] = useState(0);
-// const [TotalFat, setTotalFat] = useState(0);
-// const [TotalCal, setTotalCal] = useState(0);
-
-// const [Undefined, setUndefined] = useState("");
-
-// const updateTotalCalories = (arr) => {
-//   console.log(arr);
-//   let calories = 0;
-//   arr.forEach((item) => {
-//     const nonParsedcalories = item?.food?.nutrients?.ENERC_KCAL;
-//     const parsed = Number(Math.trunc(nonParsedcalories));
-//     calories += parsed;
-//   });
-// calories = Food.food.nutrients.ENERC_KCAL;
-// console.log(calories);
-// setTotalCal(calories);
-// };
-
-// {
-/* <p>Name: {JSON.stringify(person)}</p> */
-// }
-// {
-// }
