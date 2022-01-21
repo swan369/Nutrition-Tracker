@@ -1,5 +1,6 @@
 .image {
   width: 50px;
+  margin-right: 10px;
 }
 
 .description {
@@ -8,4 +9,15 @@
 
 ul {
   list-style-type: none;
+}
+
+.tagContainer {
+  /* display: flex; */
+  text-align: left;
+  width: 800px;
+  /* align-content: flex-start; */
+}
+
+.list-group-item {
+  margin: 0 auto;
 }

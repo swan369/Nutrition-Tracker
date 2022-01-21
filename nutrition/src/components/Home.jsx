@@ -9,15 +9,15 @@ const CardChoice = function () {
         <Link to="/keto">
           <div
             className="card text-white bg-primary mb-3"
-            style={{ maxWidth: "18rem" }}
+            // style={{ maxWidth: "18rem" }}
           >
             <div className="card-header">Ketogenic Diet track</div>
             <div className="card-body">
               <h5 className="card-title">Click me: </h5>
               <p className="card-text">
                 The aim of the Ketogenic diet focusses highly on keeping your
-                carbohydrate level below 50gram while also meeting your calorie
-                requirements in a preset ratio.
+                carbohydrate level below 50 grams while also meeting your
+                calorie requirements in a preset ratio.
               </p>
             </div>
           </div>
@@ -26,14 +26,14 @@ const CardChoice = function () {
         <Link to="/intermittent">
           <div
             className="card text-white bg-success mb-3"
-            style={{ maxWidth: "18rem" }}
+            // style={{ maxWidth: "18rem" }}
           >
             <div className="card-header">Intermittent Fasting Track</div>
             <div className="card-body">
               <h5 className="card-title">Click me: </h5>
               <p className="card-text">
-                Intermittent Fasting focusses on fasting for at least 16 hours
-                while maintain a slight calorie deficit. Effective for
+                Intermittent Fasting relies on fasting for at least 16 hours
+                while maintaining a slight calorie deficit. Effective for
                 beginners. Can be combined with the ketogenic diet.
               </p>
             </div>
@@ -46,7 +46,7 @@ const CardChoice = function () {
 
 const Home = () => {
   return (
-    <div>
+    <div className="container">
       <h2>Make your selection:-</h2>
       <main>{<CardChoice />}</main>
     </div>

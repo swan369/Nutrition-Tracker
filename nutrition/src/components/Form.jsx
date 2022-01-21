@@ -13,6 +13,7 @@ const Form = (props) => {
   return (
     <div className="form">
       <input
+        placeholder="your food here.."
         className="textInput"
         // value={props.request}
         type="text"

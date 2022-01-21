@@ -4,16 +4,19 @@ import Form from "./Form";
 import FoodItem from "./FoodItem";
 import DoughnutChart from "./DoughnutChart";
 import CalFat from "./CalFat";
+import "./Keto.css";
 
 function Keto() {
   const [Food, setFood] = useState(null);
   const [Request, setRequest] = useState("");
   const [FoodObjArr, setFoodObjArr] = useState([]);
   const [Status, setStatus] = useState("");
-  const [Carb, setCarb] = useState(1);
-  const [Prot, setProt] = useState(1);
-  const [Fat, setFat] = useState(1);
-  const [Calories, setCalories] = useState(1);
+  const [Calories, setCalories] = useState(0);
+  const [Carb, setCarb] = useState(0);
+  const [Prot, setProt] = useState(0);
+  const [Fat, setFat] = useState(0.1);
+  const [Nutrients, setNutrients] = useState(0);
+  const [PercNutrient, setPercNutrient] = useState(null);
 
   const foodURL = `https://api.edamam.com/api/food-database/v2/parser?app_id=52bf2812&app_key=66ff0f0b901d583501ff1d55e8b00be7&ingr=${Request}&nutrition-type=cooking&category=generic-foods`;
 
@@ -56,12 +59,36 @@ function Keto() {
     setRequest("");
   }, [Food]);
 
+  useEffect(() => {
+    totalNutrients(Carb, Prot, Fat);
+  }, [Carb, Prot, Fat]);
+
+  useEffect(() => {
+    percentEaNutrient(Carb, Prot, Fat);
+  }, [Nutrients]);
+
   function sanitise(x) {
     if (isNaN(x)) {
       return NaN;
     }
     return x;
   }
+  const percentEaNutrient = (Carb, Prot, Fat) => {
+    console.log(Carb);
+    console.log(Nutrients);
+    const carb = Math.floor((Carb / Nutrients) * 100);
+    const prot = Math.floor((Prot / Nutrients) * 100);
+    const fat = Math.floor((Fat / Nutrients) * 100);
+    console.log(carb);
+    console.log(prot);
+    console.log(fat);
+
+    setPercNutrient({ carb, prot, fat });
+    console.log(PercNutrient);
+  };
+  const totalNutrients = (Carb, Prot, Fat) => {
+    setNutrients(Carb + Prot + Fat);
+  };
 
   const addTotalCarb = (Food) => {
     const foodCarb = parseInt(Food?.food?.nutrients?.CHOCDF);
@@ -112,8 +139,16 @@ function Keto() {
   const removeTotalCalories = (Food) => {
     const item = Food[0];
     const foodCalories = parseInt(item?.food?.nutrients?.ENERC_KCAL);
-    setFat(Calories - foodCalories);
+    setCalories(Calories - foodCalories);
   };
+
+  // const removeNutrients = (Food) => {
+  //   const item = Food[0];
+  //   const { carb, prot, fat } = item;
+  //   const foodObj = { carb, prot, fat };
+  //   setNutrients({ ...Nutrients, ...foodObj });
+  //   console.log(Nutrients);
+  // };
 
   const removeFromCart = (index) => {
     const foodRemoved = FoodObjArr.filter((item, i) => i === index);
@@ -124,6 +159,8 @@ function Keto() {
     removeTotalFat(foodRemoved);
     removeTotalCarb(foodRemoved);
     removeTotalCalories(foodRemoved);
+    // removeNutrients(foodRemoved);
+    totalNutrients(Carb, Prot, Fat);
   };
 
   const handleSubmit = (msg, e) => {
@@ -143,7 +180,9 @@ function Keto() {
   return (
     <>
       <div className="ketogenic">
-        <p>Keto goal: less than 50g Carb, Carb: 5%, Protein: 20%, Fat: 75%</p>
+        <p>
+          Keto goal: less than 50g of Carb, Carb: 5%, Protein: 20%, Fat: 75%
+        </p>
         <Form click={handleSubmit} />
         <div>
           {/* <h2>Your food</h2> */}
@@ -166,7 +205,7 @@ function Keto() {
         {/* {FoodObjArr.map((item, index) => {
           return <CalFat carb={Carb} cal={Calories} />;
         })} */}
-        <CalFat carb={Carb} cal={Calories} />
+        <CalFat carb={Carb} cal={Calories} percNutrient={PercNutrient} />
       </div>
     </>
   );
