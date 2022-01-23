@@ -1,10 +1,14 @@
 import React from "react";
-import { useState, useEffect, prevState } from "react";
+import { useState, useEffect, prevState, createContext } from "react";
 import Form from "./Form";
 import FoodItem from "./FoodItem";
 import DoughnutChart from "./DoughnutChart";
 import CalFat from "./CalFat";
 import "./Keto.css";
+import { Link } from "react-router-dom";
+
+export const DataContext = createContext();
+console.log("DataContent", DataContext);
 
 function Keto() {
   const [Food, setFood] = useState(null);
@@ -142,14 +146,6 @@ function Keto() {
     setCalories(Calories - foodCalories);
   };
 
-  // const removeNutrients = (Food) => {
-  //   const item = Food[0];
-  //   const { carb, prot, fat } = item;
-  //   const foodObj = { carb, prot, fat };
-  //   setNutrients({ ...Nutrients, ...foodObj });
-  //   console.log(Nutrients);
-  // };
-
   const removeFromCart = (index) => {
     const foodRemoved = FoodObjArr.filter((item, i) => i === index);
     console.log(foodRemoved);
@@ -168,6 +164,7 @@ function Keto() {
     const messageTyped = msg.current.value;
     setRequest(messageTyped);
     setFood("");
+    // alert("handlesubmit works");
   };
   if (Status === "pending") {
     return "LOADING";
@@ -183,7 +180,11 @@ function Keto() {
         <p>
           Keto goal: less than 50g of Carb, Carb: 5%, Protein: 20%, Fat: 75%
         </p>
-        <Form click={handleSubmit} />
+        <DataContext.Provider value={handleSubmit}>
+          <Form value={handleSubmit} />
+        </DataContext.Provider>
+
+        {/* <Form click={handleSubmit} /> */}
         <div>
           {/* <h2>Your food</h2> */}
           <ul className="list-group">
@@ -206,6 +207,7 @@ function Keto() {
           return <CalFat carb={Carb} cal={Calories} />;
         })} */}
         <CalFat carb={Carb} cal={Calories} percNutrient={PercNutrient} />
+        <Link to="/keto/test">{/* <span>Test</span> */}</Link>
       </div>
     </>
   );

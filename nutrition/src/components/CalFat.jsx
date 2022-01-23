@@ -13,7 +13,7 @@ const CalFat = (props) => {
         </p>
         <p>
           <strong>Carb: {props?.carb} grams</strong> - Calories: {props?.cal}{" "}
-          cal
+          kcal
         </p>
       </div>
     </div>

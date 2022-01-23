@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "./Keto";
 import "./Button.css";
 
 const Button = (props) => {
+  // const dataContext = useContext(DataContext);
+
   return (
     <input
       className="btn btn-primary"

@@ -14,7 +14,7 @@ const FoodItem = (props) => {
         <img className="image" src={props.item?.food?.image} />
         <div className="description">
           Carb: {nutrition?.CHOCDF} g, Protein: {nutrition?.PROCNT} g, Fat:{" "}
-          {nutrition?.FAT} g, Calories: {nutrition?.ENERC_KCAL}
+          {nutrition?.FAT} g, Calories: {nutrition?.ENERC_KCAL} kcal
         </div>
       </div>
     </li>

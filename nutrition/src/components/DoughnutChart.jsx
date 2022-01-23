@@ -1,11 +1,11 @@
 import React from "react";
 import "./DoughnutChart.css";
 import "chart.js/auto";
-// import Chart from "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
-// import { useEffect } from "react";
-// import CalFat from "./CalFat";
+import { Chart } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
+// Chart.register(ChartDataLabels);
 const DoughnutChart = (props) => {
   const carb = props.carb;
   const prot = props.prot;

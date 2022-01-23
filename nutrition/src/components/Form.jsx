@@ -2,8 +2,11 @@ import React from "react";
 import Button from "./Button";
 import "./Form.css";
 import { useRef } from "react";
+import { useContext } from "react";
+import { DataContext } from "./Keto";
 
 const Form = (props) => {
+  const click = useContext(DataContext);
   const inputRef = useRef();
   // console.log(inputRef);
   const reset = () => {
@@ -20,9 +23,11 @@ const Form = (props) => {
         ref={inputRef}
         // onChange={props.click}
       />
-      <Button msg={inputRef} click={props.click} handleClickReset={reset} />
+      <Button msg={inputRef} click={click} handleClickReset={reset} />
     </div>
   );
 };
 
 export default Form;
+
+// click={props.click}
