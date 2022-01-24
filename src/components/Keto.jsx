@@ -6,7 +6,7 @@ import DoughnutChart from "./DoughnutChart";
 import CalFat from "./CalFat";
 import "./Keto.css";
 import { Link } from "react-router-dom";
-import REACT_APP_API_KEY from "../../.env";
+// import REACT_APP_API_KEY from "../../.env";
 
 export const DataContext = createContext();
 console.log("DataContent", DataContext);
@@ -23,10 +23,10 @@ function Keto() {
   const [Nutrients, setNutrients] = useState(0);
   const [PercNutrient, setPercNutrient] = useState(null);
 
-  const MY_KEY = process.env.REACT_APP_API_KEY;
-  console.log(MY_KEY);
+  // const MY_KEY = process.env.REACT_APP_API_KEY;
+  // console.log(MY_KEY);
 
-  const foodURL = `https://api.edamam.com/api/food-database/v2/parser?app_id=52bf2812&app_key=${MY_KEY} =${Request}&nutrition-type=cooking&category=generic-foods`;
+  const foodURL = `https://api.edamam.com/api/food-database/v2/parser?app_id=52bf2812&app_key=66ff0f0b901d583501ff1d55e8b00be7&ingr=${Request}&nutrition-type=cooking&category=generic-foods`;
 
   // 66ff0f0b901d583501ff1d55e8b00be7&ingr
   const getRandomFood = () => {
