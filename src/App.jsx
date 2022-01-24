@@ -25,7 +25,7 @@ function NotFound() {
 }
 
 function App() {
-  const [test, setTest] = useState("hello world");
+  const [test, setTest] = useState("BLOG section");
 
   return (
     <div>
@@ -38,7 +38,7 @@ function App() {
           <span className="aboutSpan">ABOUT</span>
         </Link>
         <Link className="link" to="home/test">
-          <span className="aboutSpan">TEST</span>
+          <span className="aboutSpan">BLOG</span>
         </Link>
       </nav>
 
@@ -52,7 +52,7 @@ function App() {
         </Route>
         <Route path="about" element={<About />} />
         <Route path="intermittent" element={<Exercise />} />
-        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="*" element={<NotFound />} />
 
         {/* <Route path="/price/:nutrient" element={<carb />} /> */}
 
