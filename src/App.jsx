@@ -52,7 +52,7 @@ function App() {
         </Route>
         <Route path="about" element={<About />} />
         <Route path="intermittent" element={<Exercise />} />
-        <Route path="*" element={<NotFound />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
 
         {/* <Route path="/price/:nutrient" element={<carb />} /> */}
 
