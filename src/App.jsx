@@ -1,13 +1,15 @@
 import { Route, Routes, Link, Outlet } from "react-router-dom";
 import "./App.css";
 import { useNavigate } from "react-router";
-import Keto from "./components/Keto";
+import Diet from "./components/Diet.jsx";
 import Exercise from "./components/Exercise";
 import Home from "./components/Home";
 import About from "./components/About";
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Test from "./components/Test.jsx";
+import Shop from "./components/Shop.jsx";
+import Busy from "./components/Busy.jsx";
 
 function NotFound() {
   const navigate = useNavigate();
@@ -37,21 +39,27 @@ function App() {
         <Link className="link" to="/about">
           <span className="aboutSpan">ABOUT</span>
         </Link>
+        <Link className="link" to="/shop">
+          <span className="aboutSpan">SHOP</span>
+        </Link>
         <Link className="link" to="home/test">
           <span className="aboutSpan">BLOG</span>
         </Link>
+        <Link to="busy">1-2 days a week</Link>
       </nav>
 
       <Routes>
-        {/* <Route path="/" /> */}
-        <Route path="keto" element={<Keto />} />
+        <Route path="/" />
+        <Route path="/keto" element={<Diet />} />
         {/* </Route> */}
-        <Route path="home" element={<Home />}>
+        <Route path="/home" element={<Home />}>
           <Route path="test" element={<Test msg={test} />} />
           {/* Link path must match */}
         </Route>
-        <Route path="about" element={<About />} />
-        <Route path="intermittent" element={<Exercise />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/exercise" element={<Exercise />} />
+        <Route path="/busy" element={<Busy />} />
         <Route path="*" element={<NotFound />} />
 
         {/* <Route path="/price/:nutrient" element={<carb />} /> */}

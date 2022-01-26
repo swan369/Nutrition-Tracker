@@ -3,11 +3,12 @@ import Button from "./Button";
 import "./Form.css";
 import { useRef } from "react";
 import { useContext } from "react";
-import { DataContext } from "./Keto";
+import { DataContext } from "./Diet.jsx";
 
 const Form = (props) => {
   const click = useContext(DataContext);
   const inputRef = useRef();
+  console.log(click);
   // console.log(inputRef);
   const reset = () => {
     inputRef.current.value = "";

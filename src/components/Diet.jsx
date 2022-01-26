@@ -4,7 +4,7 @@ import Form from "./Form";
 import FoodItem from "./FoodItem";
 import DoughnutChart from "./DoughnutChart";
 import CalFat from "./CalFat";
-import "./Keto.css";
+import "./Diet.css";
 import { Link } from "react-router-dom";
 
 export const DataContext = createContext();
@@ -24,17 +24,17 @@ function Keto() {
 
   const myKey = import.meta.env.VITE_API_KEY;
   const myUsername = import.meta.env.VITE_USERNAME;
-  console.log("mykey", myKey);
+  // console.log("mykey", myKey);
 
   const foodURL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${myUsername}&app_key=${myKey}&ingr=${Request}&nutrition-type=cooking&category=generic-foods`;
 
-  // 66ff0f0b901d583501ff1d55e8b00be7&ingr
   const getRandomFood = () => {
     setStatus("pending");
 
     fetch(foodURL)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setStatus("complete");
         let n = data?.parsed?.[0];
         console.log(n);
@@ -83,14 +83,9 @@ function Keto() {
     return x;
   }
   const percentEaNutrient = (Carb, Prot, Fat) => {
-    console.log(Carb);
-    console.log(Nutrients);
     const carb = Math.floor((Carb / Nutrients) * 100);
     const prot = Math.floor((Prot / Nutrients) * 100);
     const fat = Math.floor((Fat / Nutrients) * 100);
-    console.log(carb);
-    console.log(prot);
-    console.log(fat);
 
     setPercNutrient({ carb, prot, fat });
     console.log(PercNutrient);
@@ -110,7 +105,7 @@ function Keto() {
     if (sanitise(foodProt)) {
       setProt((prevProt) => prevProt + foodProt);
     }
-    console.log(Prot);
+    // console.log(Prot);
   };
 
   const addTotalFat = (Food) => {
@@ -186,7 +181,7 @@ function Keto() {
           Keto goal: less than 50g of Carb, Carb: 5%, Protein: 20%, Fat: 75%
         </p>
         <DataContext.Provider value={handleSubmit}>
-          <Form value={handleSubmit} />
+          <Form />
         </DataContext.Provider>
 
         {/* <Form click={handleSubmit} /> */}

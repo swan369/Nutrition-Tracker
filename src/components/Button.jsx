@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { DataContext } from "./Keto";
+import { DataContext } from "./Diet.jsx";
 import "./Button.css";
 
 const Button = (props) => {

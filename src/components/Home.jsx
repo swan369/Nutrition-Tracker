@@ -30,7 +30,7 @@ const CardChoice = function () {
           </div>
         </Link>
 
-        <Link to="/intermittent">
+        <Link to="/exercise">
           <div
             className="card text-white bg-success mb-3"
             // style={{ maxWidth: "18rem" }}
