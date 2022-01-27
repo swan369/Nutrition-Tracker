@@ -6,7 +6,7 @@ const CardChoice = function () {
   return (
     <>
       <div>
-        <Link to="/keto">
+        <Link to="/diet">
           <div
             className="card text-white bg-primary mb-3"
             // style={{ maxWidth: "18rem" }}

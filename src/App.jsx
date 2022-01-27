@@ -7,7 +7,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Test from "./components/Test.jsx";
+import Blog from "./components/Blog.jsx";
 import Shop from "./components/Shop.jsx";
 import Busy from "./components/Busy.jsx";
 
@@ -42,27 +42,26 @@ function App() {
         <Link className="link" to="/shop">
           <span className="aboutSpan">SHOP</span>
         </Link>
-        <Link className="link" to="home/test">
+        <Link className="link" to="home/blog">
           <span className="aboutSpan">BLOG</span>
         </Link>
-        <Link to="busy">1-2 days a week</Link>
+        {/* <Link to="busy">1-2 days a week</Link> */}
       </nav>
 
       <Routes>
-        <Route path="/" />
-        <Route path="/keto" element={<Diet />} />
+        {/* <Route path="/" /> */}
+        <Route path="diet" element={<Diet />} />
         {/* </Route> */}
-        <Route path="/home" element={<Home />}>
-          <Route path="test" element={<Test msg={test} />} />
-          {/* Link path must match */}
+        <Route path="home" element={<Home />}>
+          <Route path="blog" element={<Blog msg={test} />} />
         </Route>
-        <Route path="/about" element={<About />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/exercise" element={<Exercise />} />
-        <Route path="/busy" element={<Busy />} />
+        <Route path="about" element={<About />} />
+        <Route path="shop" element={<Shop />} />
+        <Route path="exercise" element={<Exercise />} />
+        <Route path="busy" element={<Busy />} />
         <Route path="*" element={<NotFound />} />
 
-        {/* <Route path="/price/:nutrient" element={<carb />} /> */}
+        {/* <Route path="/diet/:nutrient" element={<carb />} /> */}
 
         {/* <Route
           path="*"

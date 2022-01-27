@@ -1,14 +1,16 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import Drop from "./Drop.jsx";
 import Busy from "./Busy.jsx";
 import { useEffect, useState, API } from "react";
 
 const Exercise = () => {
   const [muscleCategory, setMuscleCategory] = useState([]);
-  const [busyMuscles, setBusyMuscles] = useState([]);
   const [days, setDays] = useState([]);
+  const [busyMuscles, setBusyMuscles] = useState([]);
   const [busyDays, setBusyDays] = useState([]);
+  const [merged, setMerged] = useState(null);
+  const navigate = useNavigate();
 
   const muscleCategoryURL = "https://wger.de/api/v2/exercisecategory";
   const getMusclesURL = () => {
@@ -34,9 +36,6 @@ const Exercise = () => {
 
   const handleBusy = (e) => {
     e.preventDefault();
-    // console.log("handleBusy working");
-    // console.log(muscleCategory);
-
     const filteredMuscles = muscleCategory.filter((item) => {
       return (
         item.name.toLowerCase() === "back" ||
@@ -59,37 +58,42 @@ const Exercise = () => {
     setBusyDays(filteredDays);
     setDays([]);
 
-    console.log(filteredDays);
-    console.log(busyDays);
+    // navigate("/busy");
   };
 
   useEffect(() => {
+    setMerged([...busyDays, ...busyMuscles]);
+  }, [busyDays]);
+
+  useEffect(() => {
     getMusclesURL();
-    getDaysURL();
   }, [handleBusy]);
 
-  // useEffect(() => {
-  //   API.subscribe();
-  //   return function cleanup() {
-  //     API.unsubscribe();
-  //   };
-  // });
+  useEffect(() => {
+    getDaysURL();
+  }, [busyMuscles]);
+
+  const drop = (handleBusy) => {
+    return <Drop handleBusy={handleBusy} />;
+  };
+
+  const busy = (merged) => {
+    if (merged) {
+      // console.log(merged);
+      return merged.map((item, index) => {
+        return <Busy {...item} key={index} />;
+      });
+    }
+  };
 
   return (
     <>
       <div>
         <h1>Exercise</h1>
         <p>How many days a week can you devote to change your life forever</p>
-
-        <Drop handleBusy={handleBusy} />
-        {busyMuscles.map((item, index) => {
-          return <Busy {...item} message="Targetted Muscles: " key={index} />;
-        })}
-
-        {busyDays.map((item, index) => {
-          return <Busy day={item.day_of_week} key={index} />;
-        })}
-
+        {drop(handleBusy)}
+        {/* <Drop handleBusy={handleBusy} /> */}
+        {busy(merged)}
         {/* <Outlet /> */}
       </div>
     </>

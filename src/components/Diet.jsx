@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, prevState, createContext, process } from "react";
+import { useState, useEffect, createContext } from "react";
 import Form from "./Form";
 import FoodItem from "./FoodItem";
 import DoughnutChart from "./DoughnutChart";
@@ -8,7 +8,7 @@ import "./Diet.css";
 import { Link } from "react-router-dom";
 
 export const DataContext = createContext();
-console.log("DataContent", DataContext);
+// console.log("DataContent", DataContext);
 
 function Keto() {
   const [Food, setFood] = useState(null);
@@ -34,10 +34,10 @@ function Keto() {
     fetch(foodURL)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setStatus("complete");
         let n = data?.parsed?.[0];
-        console.log(n);
+        // console.log(n);
         setFood(n);
       })
       .catch((error) => {
@@ -88,7 +88,7 @@ function Keto() {
     const fat = Math.floor((Fat / Nutrients) * 100);
 
     setPercNutrient({ carb, prot, fat });
-    console.log(PercNutrient);
+    // console.log(PercNutrient);
   };
   const totalNutrients = (Carb, Prot, Fat) => {
     setNutrients(Carb + Prot + Fat);
@@ -124,7 +124,7 @@ function Keto() {
   const removeTotalCarb = (Food) => {
     const item = Food[0];
     const foodCarb = parseInt(item?.food?.nutrients?.CHOCDF);
-    console.log(foodCarb);
+    // console.log(foodCarb);
     setCarb(Carb - foodCarb);
   };
 
@@ -178,7 +178,7 @@ function Keto() {
     <>
       <div className="ketogenic">
         <p>
-          Keto goal: less than 50g of Carb, Carb: 5%, Protein: 20%, Fat: 75%
+          Keto goal: less than 30g of Carb, Carb: 5%, Protein: 20%, Fat: 75%
         </p>
         <DataContext.Provider value={handleSubmit}>
           <Form />
@@ -207,7 +207,7 @@ function Keto() {
           return <CalFat carb={Carb} cal={Calories} />;
         })} */}
         <CalFat carb={Carb} cal={Calories} percNutrient={PercNutrient} />
-        <Link to="/keto/test">{/* <span>Test</span> */}</Link>
+        <Link to="/diet/test">{/* <span>Test</span> */}</Link>
       </div>
     </>
   );

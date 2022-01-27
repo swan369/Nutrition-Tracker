@@ -3,7 +3,7 @@ import "./CalFat.css";
 
 const CalFat = (props) => {
   const food = props.percNutrient;
-  console.log(food);
+  // console.log(food);
 
   return (
     <div>
