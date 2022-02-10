@@ -8,9 +8,8 @@ import "./Diet.css";
 import { Link } from "react-router-dom";
 
 export const DataContext = createContext();
-// console.log("DataContent", DataContext);
 
-function Keto() {
+function Diet() {
   const [Food, setFood] = useState(null);
   const [Request, setRequest] = useState("");
   const [FoodObjArr, setFoodObjArr] = useState([]);
@@ -161,6 +160,7 @@ function Keto() {
 
   const handleSubmit = (msg, e) => {
     e.preventDefault();
+    console.log(e.target.name);
     const messageTyped = msg.current.value;
     setRequest(messageTyped);
     setFood("");
@@ -213,4 +213,4 @@ function Keto() {
   );
 }
 
-export default Keto;
+export default Diet;

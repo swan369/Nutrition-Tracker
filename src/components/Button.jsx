@@ -16,6 +16,7 @@ const Button = (props) => {
     //   }}
     // />
     <button
+      name="stupid button"
       onClick={(e) => {
         props.click(props.msg, e);
         props.handleClickReset();

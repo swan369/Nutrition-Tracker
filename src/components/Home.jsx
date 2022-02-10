@@ -61,7 +61,9 @@ const Home = () => {
         <h2>Fitness with none the fluff !</h2>
       </div>
 
-      <main>{<CardChoice />}</main>
+      <main>
+        <CardChoice />
+      </main>
       <Outlet />
     </div>
   );
